@@ -1,0 +1,593 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
+@import url(reset.css);
+
+:root {
+  /*farver*/
+  --white: #ffffff;
+  --black: #0e0e10;
+  --beige: #fffded; 
+  --lightbrown: #f3e1cd;
+  --brown: #a05d42;
+  --red: #e2001a;
+  
+  /*fonte*/
+  --tekst: 'Quicksand', sans-serif;
+  --overskrift: 'Bubblegum Sans', cursive;
+  
+  /* størrelser */
+  --wrap: 90%;
+  --navheight: 120px;
+  --hvr-nav-height: 4px;
+}
+
+/* flex classes så man nemt kan designe layout i html */
+
+.flex {
+  display: flex;
+}
+.flexc {
+  display: flex;
+  flex-direction: column;
+}
+.flex-mobile{
+  display: flex;
+  flex-direction: column;
+}
+.flex-center{
+  justify-content: center;
+  align-items: center;
+}
+.flex-jc-c {
+  justify-content: center;
+}
+.flex-jc-sb {
+  justify-content: space-between;
+}
+.flex-jc-fe {
+  justify-content: flex-end;
+}
+.flex-ai-c {
+  align-items: center;
+}
+.flex-ai-fe {
+  align-items: flex-end;
+}
+.flexbox{
+  display: flex;
+  flex: 1;
+}
+.gap-100{
+  gap: 1rem;
+}
+.gap-150{
+  gap: 1.5rem
+}
+.gap-200{
+  gap: 2rem;
+}
+.relative{
+  position: relative;
+}
+
+.wrapper{
+  width: var(--wrap);
+  margin-inline: auto;
+}
+
+header {
+  background-color: var(--lightbrown);
+}
+
+header .wrapper{
+  min-height: var(--navheight);
+  padding-bottom: 40px;
+}
+
+/* fjerner vores desktop version af vores navigation */
+header .wrapper > *:nth-child(3){
+  display: none;
+}
+
+header nav {
+  font-size: 2em;
+  font-family: var(--overskrift);
+}
+
+header li {
+  list-style-type: none;
+  color: var(--brown);
+}
+
+header a {
+  color: var(--brown);
+  text-decoration: none;
+}
+
+/* Vi laver vores egen burgermenu ved brug af pseudo elementer ::before og ::after */
+.burger,
+.burger::before,
+.burger::after{
+  display: block;
+  width: 36px;
+  height: 3px;
+  background-color: var(--brown);
+}
+.burger::before,
+.burger::after{
+  content: "";
+}
+.burger::before{
+  transform: translateY(11px);
+}
+.burger::after{
+  transform: translateY(20px);
+}
+
+.logofirst {
+  order: -1;
+}
+
+/* styler vores mobile nav og bruger psuedo classen checked til at vise den frem */
+
+input[type=checkbox]{
+  display: none;
+}
+
+.mobile-nav input[type=checkbox]:checked ~ .mobile-navbar{
+  transform: translateX(120%);
+}
+
+.mobile-navbar{
+  position: absolute;
+  width: 100%;
+  padding-bottom: 1em;
+  background-color: var(--lightbrown);
+  text-transform: uppercase;
+  top: var(--navheight);
+  left: -120%;
+  z-index: 9;
+  transition: transform 500ms ease-in-out;
+}
+
+.mobile-nav li + li{
+  padding-top: .5em;
+}
+
+/* laver en chevron pil ned, ved brug af after og before psuedo elementer */
+.arrow-down{
+  display: inline-block;
+  position: relative;
+  width: 30px;
+  height: 3px;
+}
+
+.arrow-down::before, 
+.arrow-down::after {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  background-color: var(--brown);
+  width: 20px;
+  height: 3px;
+  cursor: pointer;  
+}
+.arrow-down::before{
+  transform: rotate(45deg) translate(-6px, -6px);
+}
+.arrow-down::after{
+  transform: rotate(-45deg) translate(15px, 3px);
+}
+
+/* viser vores dropdown frem */
+input[type=checkbox]:checked ~ .dropdown-menu{
+  display: flex;
+}
+
+/* gemmer vores dropdown væk */
+.dropdown-menu{
+  display: none;
+  padding-top: .5em;
+}
+
+/* bruger whitespace: nowrap til at få tingene på linje */
+.dropdown-menu li{
+  width: 150px;
+  white-space: nowrap;
+}
+
+.dropdown-btn{
+  width: 12ch;
+  text-transform: uppercase;
+}
+
+input[type=checkbox]:checked ~ .dropdown-menu-desktop{
+  display: flex;
+}
+
+.dropdown-menu-desktop{
+  display: none;
+  position: absolute;
+  top: 85px;
+  right: -50px;
+  background: var(--lightbrown);
+  z-index: 9;
+}
+
+.dropdown-menu-desktop li{
+  margin-left: 1em;
+  margin-right: 1em;
+  display: flex;
+}
+
+.logo {
+  width: 120px;
+  display: block;
+}
+
+.navbar a{
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.navbar a::after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--lightbrown);
+  transform: translateY(calc(1px + var(--hvr-nav-height)));
+  transition: transform 200ms ease-in;
+  z-index: 2;
+}
+
+.navbar a:hover{
+  color: var(--red);
+}
+
+.navbar a:hover::after {
+  transform: translateY(0);
+}
+
+.navbar span:hover{
+  color: var(--red);
+}
+
+.konkurrenceknap:hover{
+  color: var(--beige);
+}
+
+/* laver en class for de forskellige bigpic's jeg har, så jeg kan give dem en padding og derved
+få baggrundsbilledet et lille stykke frem bagved*/
+
+.bigpic-padding {
+padding-top: 2em;
+}
+
+main {
+  background-image: url(content/baggrund1.avif);
+  padding-bottom: 2rem;
+}
+
+main h2{
+  font-family: var(--overskrift);
+  color: var(--red);
+  text-decoration: underline;
+  font-weight: 900;
+}
+
+main h3{
+  font-family: var(--overskrift);
+  color: var(--red);
+  font-weight: 600;
+}
+
+main p {
+  font-family: var(--tekst);
+  color: var(--brown);
+  font-weight: 600;
+}
+section:first-of-type{
+  padding-top: 2rem;
+}
+main .mobile-bigpic{
+  padding-top: 0;
+}
+
+.desktop-bigpic{
+  display: none;
+}
+
+.outer-box {
+  background: rgba(243, 225, 205, 0.4);
+}
+
+.outer-box-txt {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.outer-box-txt p{
+  color: var(--red);
+  font-family: var(--tekst);
+  font-weight: 600;
+}
+
+.outer-box-txt p+p{
+  padding-top: 20px;
+}
+
+.outer-box-txt a {
+  text-decoration: underline;
+  color: var(--red);
+}
+
+.intro-slide::after{
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(243, 225, 205, 0.4);
+  z-index: 3;
+  inset: 0;
+}
+
+.intro-slide .text{
+  position: absolute;
+  background: rgba(243, 225, 205, 0.4);
+  inset: 0;
+  margin: auto;
+  height: 80%;
+  width: var(--wrap);
+  z-index: 4;
+}
+
+.intro-slide h2{
+  font-weight: 700;
+  font-family: var(--overskrift);
+  color: var(--brown);
+  text-align: center;
+  width: 24ch;
+}
+
+.intro-slide h3{
+  font-family: var(--tekst);
+  color: var(--brown);
+  text-align: center;
+  width: 24ch;
+}
+
+.intro-slide a{
+text-transform: uppercase;
+text-decoration: none;
+font-family: var(--overskrift);
+color: var(--beige);
+background-color: var(--red);
+border: 2px solid var(--red);
+padding: .5em 1em;
+display: inline-block;
+margin-bottom: 1em;
+}
+
+section + section{
+  margin-top: 2em;
+}
+
+.pilned {
+  padding-top: 5em;
+  width: 100px;
+  height: auto;
+}
+
+.pilned a {
+  background: none;
+  border: none;
+}
+
+.column-container{
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(min(100%,25ch),1fr));
+  gap: 2em;
+  width: 90%;
+  margin: 2em auto;
+}
+
+.diy-box {
+  background: rgba(160, 93, 66, 0.7); /*en faded version af vores variabel "brown". HEX koden blev bare konverteret til RGBA*/
+  font-family: var(--overskrift);
+  text-align: center;
+} 
+
+.diy-box p {
+  text-align: center;
+  color: var(--beige);
+  font-family: var(--tekst);
+}
+
+.diy-box > p{
+  padding: 1em;
+}
+
+.diy-box a {
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: var(--overskrift);
+  color: var(--beige);
+  background-color: var(--red);
+  border: 2px solid var(--red);
+  padding: .5em 1em;
+  display: inline-block;
+  margin-bottom: 1em;
+}
+
+.diy-beskrivelse{
+  font-weight: 400;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  padding-block: .5em;
+}
+
+footer{
+  background: var(--brown);
+  font-family: var(--overskrift);
+  padding-bottom: 2em;
+  padding-top: 2em;
+}
+
+footer .line-shift{
+  width: 40px;
+  height: 2px;
+  background-color: var(--lightbrown);
+  border: none;
+  margin-right: auto;
+  margin-bottom: .5em;
+  margin-top: 8px;
+  
+}
+
+footer p{
+  font-family: var(--tekst);
+}
+
+footer h2,
+footer h3,
+footer p{
+  margin-bottom: .5em;
+  color: var(--lightbrown);
+}
+
+footer a {
+  text-decoration: none;
+  color: var(--lightbrown);
+}
+.footer-sponsor{
+  width: 100px;
+  display: block;
+  margin-bottom: 1em;
+}
+
+/*SVG ikoner i footeren - både farve og størrelse*/
+footer svg {
+  width: 2.5rem;
+  fill: var(--lightbrown);
+}
+
+.footer-links{
+  font-size: 1.2rem;
+}
+
+.footer-links::before{
+  content: ">";
+  display: inline-block;
+  margin-right: .5em;
+}
+
+/* 40em = 640px, bruger em i stedet for px så siden også ændre ved zoom */
+@media screen and (min-width: 50em){
+
+  :root{
+    --wrap: 85%;
+  }
+
+  .flex-mobile{
+    flex-direction: row;
+  }
+
+  .flex-mobile > * + *{
+    margin-top: 0;
+  } 
+  main{
+    background-image: url(content/baggrund1.avif);
+  }
+
+  .max-bredde {
+    max-width: 500px;
+  }
+
+}
+
+/* 56em = 896px, vores menu skubber ud til siden ved lavere opløsninger */
+@media screen and (min-width: 56em){
+
+  :root{
+    --wrap: 80%;
+  }
+
+  /* justere header elementer */
+  header .wrapper > *:nth-child(1){
+    display: none;
+  }
+  header .wrapper > *:nth-child(2){
+    justify-content: flex-start;
+  }
+  header .wrapper > *:nth-child(3){
+    display: flex;
+  }
+  header .wrapper > *:nth-child(4){
+    justify-content: flex-end;
+  }
+
+  .mobile-bigpic{
+    display: none;
+  }
+  .desktop-bigpic{
+    display: block;
+    margin-top: 0;
+  }
+  .intro-slide::after{
+    display: none;
+  }
+  .intro-slide .text{
+    height: 100%;
+    width: 100%;
+  }
+
+/* som rettelse efter min usability- og brugertest, gør jeg baggrunden mere "lys" og ændrer skriftfarven til rød, 
+da feedback lød på, at teksten godt kunne være svær at læse i desktop-tilstand.*/
+
+.intro-slide h2{
+  font-weight: 700;
+  font-family: var(--overskrift);
+  color: var(--red);
+  text-align: center;
+}
+
+.intro-slide h3{
+  font-family: var(--tekst);
+  color: var(--red);
+  text-align: center;
+}
+
+.intro-slide .text{
+  background: rgba(243, 225, 205, 0.6);
+}
+
+}
+/* 68em = 1088 */
+@media screen and (min-width: 68em) {
+  
+  :root{
+    --wrap: 75%;
+  }
+
+  .bigpic-padding{
+    padding-top: 2em;
+  }
+
+  .produktbillede {
+    width: 300px;
+    height: auto;
+  }
+ 
+  .konkurrenceknap:hover{
+   transform: scale(1.5);
+   transition: transform .5s ease;
+  }
+}
